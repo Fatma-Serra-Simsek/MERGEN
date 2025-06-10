@@ -1,14 +1,38 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ChatBot from "./components/ChatBot";
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
 
 // DailyPlan bileşenini dinamik olarak içe aktar
 const DailyPlan = dynamic(() => import('@/components/DailyPlan'), {
   ssr: false
 });
+
+// Takvim Modal bileşeni
+const CalendarModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg p-6 w-[90vw] h-[90vh] relative">
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+        >
+          ✕
+        </button>
+        <iframe
+          src="/calendar/index.html"
+          className="w-full h-full border-none"
+          title="Takvim"
+        />
+      </div>
+    </div>
+  );
+};
 
 type Task = {
   id: number;
@@ -32,11 +56,17 @@ function getTotalStats(tasks: Task[]) {
 }
 
 export default function Home() {
+  const router = useRouter();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [showAddTask, setShowAddTask] = useState(false);
   const [newTaskText, setNewTaskText] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [dailyPlanTasksForStats, setDailyPlanTasksForStats] = useState<Task[]>([]);
+
+  useEffect(() => {
+    // Uygulama yüklendiğinde doğrudan giriş sayfasına yönlendir
+    router.push('/login');
+  }, [router]);
 
   const handleAddTask = () => {
     if (newTaskText.trim() && selectedCategory) {

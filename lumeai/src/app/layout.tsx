@@ -1,26 +1,31 @@
+"use client";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { useState } from "react";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "LumeAI - Yapay Zeka Çözümleri",
-  description: "LumeAI ile işinizi bir üst seviyeye taşıyın. Yapay zeka destekli çözümler ve otomatik optimizasyon araçları.",
-};
+// export const metadata: Metadata = {
+//   title: "LumeAI - Yapay Zeka Çözümleri",
+//   description: "LumeAI ile işinizi bir üst seviyeye taşıyın. Yapay zeka destekli çözümler ve otomatik optimizasyon araçları.",
+// };
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   return (
     <html lang="tr">
       <body className={inter.className}>
         <nav className="fixed w-full bg-gray-900/80 backdrop-blur-sm z-50">
           <div className="container mx-auto px-4 py-4">
             <div className="flex justify-between items-center">
-              <button className="text-white mr-4">
+              <button className="text-white mr-4" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                 </svg>
@@ -28,14 +33,50 @@ export default function RootLayout({
               <div className="text-2xl font-bold text-white">LumeAI</div>
               <div className="hidden md:flex flex-grow justify-center space-x-8">
                 <a href="/" className="text-gray-300 hover:text-white transition-colors">Ana Sayfa</a>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors">Takvim</a>
+                <Link href="/calendar" className="text-gray-300 hover:text-white transition-colors">
+                  Takvim
+                </Link>
                 <a href="#" className="text-gray-300 hover:text-white transition-colors">İstatistikler</a>
-                <a href="/calendar" className="text-gray-300 hover:text-white transition-colors">Planlama</a>
+                <Link href="/planning" className="text-gray-300 hover:text-white transition-colors">Planlama</Link>
               </div>
               <div className="w-6 h-6 md:hidden"></div>
             </div>
           </div>
         </nav>
+        {/* Sidebar */}
+        <div className={`fixed top-0 left-0 h-full bg-gray-800 w-64 transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out z-40`}>
+          <div className="p-4">
+            <button className="text-white mb-4" onClick={() => setIsSidebarOpen(false)}>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <ul className="space-y-4">
+              <li>
+                <Link href="/" className="text-gray-300 hover:text-white transition-colors block" onClick={() => setIsSidebarOpen(false)}>Ana Sayfa</Link>
+              </li>
+              <li>
+                <Link href="/calendar" className="text-gray-300 hover:text-white transition-colors block" onClick={() => setIsSidebarOpen(false)}>Takvim</Link>
+              </li>
+              <li>
+                <a href="#" className="text-gray-300 hover:text-white transition-colors block" onClick={() => setIsSidebarOpen(false)}>İstatistikler</a>
+              </li>
+              <li>
+                <Link href="/planning" className="text-gray-300 hover:text-white transition-colors block" onClick={() => setIsSidebarOpen(false)}>Planlama</Link>
+              </li>
+              <li>
+                <Link href="/profile" className="text-gray-300 hover:text-white transition-colors block" onClick={() => setIsSidebarOpen(false)}>Profilim</Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+        {/* Overlay */}
+        {isSidebarOpen && (
+          <div
+            className="fixed inset-0 bg-black opacity-50 z-30"
+            onClick={() => setIsSidebarOpen(false)}
+          ></div>
+        )}
         {children}
         <footer className="bg-gray-900 text-gray-300 py-12">
           <div className="container mx-auto px-4">
