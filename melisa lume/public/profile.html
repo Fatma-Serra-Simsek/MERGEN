@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Profilim</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="menu-icon" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <div id="sideMenu" class="side-menu">
+    <a href="index.html">Anasayfa</a>
+    <a href="#">Takvim</a>
+    <a href="#">İstatistikler</a>
+    <a href="#">Görevler</a>
+    <a href="profile.html">Profilim</a>
+  </div>
+  <nav class="navbar">
+    <ul>
+      <li><a href="index.html">Anasayfa</a></li>
+      <li><a href="#">Takvim</a></li>
+      <li><a href="#">İstatistikler</a></li>
+      <li><a href="#">Görevler</a></li>
+    </ul>
+  </nav>
+  <div class="profile-container">
+    <h2>Profilim</h2>
+    <div class="profile-pic">
+      <img id="profileImage" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Profil Resmi">
+      <label for="profileUpload" class="upload-label">Profil Resmi Yükle</label>
+      <input type="file" id="profileUpload" accept="image/*" style="display:none">
+    </div>
+    <form class="profile-form">
+      <label>Ad Soyad</label>
+      <input type="text" placeholder="Ad Soyad">
+      <label>E-posta</label>
+      <input type="email" placeholder="E-posta">
+      <label>Doğum Tarihi</label>
+      <input type="date">
+      <label>Şifre Değiştir</label>
+      <input type="password" placeholder="Yeni Şifre">
+      <button type="submit" class="start-btn">Kaydet</button>
+    </form>
+  </div>
+  <script>
+    function toggleMenu() {
+      var menu = document.getElementById('sideMenu');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+    // Profil fotoğrafı yükleme
+    document.getElementById('profileUpload').addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          document.getElementById('profileImage').src = evt.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+    document.querySelector('.upload-label').onclick = function() {
+      document.getElementById('profileUpload').click();
+    };
+  </script>
+</body>
+</html> 
