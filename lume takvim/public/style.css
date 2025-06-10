@@ -1,0 +1,182 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #dddad5;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  max-width: 900px;
+  margin: 30px auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(77,81,109,0.08);
+  padding: 32px 24px;
+  border: 2px solid #d3bcb6;
+}
+h1 {
+  text-align: center;
+  margin: 16px 0 32px 0;
+  font-size: 2.2em;
+  color: #4d516d;
+}
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+#year {
+  border: 1px solid #b5a4b4;
+  border-radius: 4px;
+  padding: 5px 8px;
+  background: #f7f7fa;
+  color: #4d516d;
+}
+button[type="submit"] {
+  background: #a8868c;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 7px 16px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+button[type="submit"]:hover {
+  background: #4d516d;
+}
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+.month {
+  background: #f7f7fa;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(77,81,109,0.04);
+  padding: 12px 8px 16px 8px;
+  text-align: center;
+  border: 1.5px solid #b5a4b4;
+}
+.month-name {
+  font-weight: bold;
+  margin-bottom: 6px;
+  font-size: 1.1em;
+  color: #a8868c;
+}
+.days-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  font-size: 0.95em;
+  color: #4d516d;
+  margin-bottom: 2px;
+}
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+.day {
+  background: #dddad5;
+  border: 1px solid #d3bcb6;
+  border-radius: 4px;
+  margin: 0;
+  padding: 2px 0;
+  font-size: 0.98em;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  color: #4d516d;
+}
+.day:hover {
+  background: #b5a4b4;
+  color: #fff;
+}
+.empty {
+  background: transparent;
+}
+.modal {
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0; right: 0; bottom: 0;
+  background: rgba(77,81,109,0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-content {
+  background: #fff;
+  padding: 24px 18px;
+  border-radius: 10px;
+  min-width: 300px;
+  max-width: 90vw;
+  box-shadow: 0 2px 16px rgba(77,81,109,0.12);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border: 2px solid #b5a4b4;
+}
+#modal-date {
+  text-align: center;
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #4d516d;
+}
+#reminder-list {
+  margin-bottom: 10px;
+  text-align: center;
+  color: #888;
+}
+#reminder-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+#reminder-title, #reminder-desc {
+  padding: 7px 8px;
+  border: 1px solid #b5a4b4;
+  border-radius: 4px;
+  font-size: 1em;
+  background: #f7f7fa;
+  color: #4d516d;
+}
+.add-btn {
+  background: #a8868c;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 7px 0;
+  font-size: 1em;
+  cursor: pointer;
+  margin-bottom: 4px;
+  transition: background 0.2s;
+}
+.add-btn:hover {
+  background: #4d516d;
+}
+.close-btn {
+  background: #d3bcb6;
+  color: #4d516d;
+  border: none;
+  border-radius: 4px;
+  padding: 7px 0;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.close-btn:hover {
+  background: #a8868c;
+  color: #fff;
+}
+#reminder-list div {
+  background: #b5a4b4;
+  margin: 4px 0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.98em;
+  text-align: left;
+  color: #fff;
+} 
