@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>LumeAI Giriş</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="menu-icon" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <div id="sideMenu" class="side-menu">
+    <a href="index.html">Anasayfa</a>
+    <a href="#">Takvim</a>
+    <a href="#">İstatistikler</a>
+    <a href="#">Görevler</a>
+    <a href="profile.html">Profilim</a>
+  </div>
+  <nav class="navbar">
+    <ul>
+      <li><a href="index.html">Anasayfa</a></li>
+      <li><a href="#">Takvim</a></li>
+      <li><a href="#">İstatistikler</a></li>
+      <li><a href="#">Görevler</a></li>
+    </ul>
+  </nav>
+  <div class="login-container">
+    <h2>LumeAI</h2>
+    <p class="welcome">Hoş geldin!</p>
+    <form class="login-form">
+      <label for="email">E-posta</label>
+      <input type="email" id="email" placeholder="E-posta adresiniz" required>
+      <label for="password">Şifre</label>
+      <input type="password" id="password" placeholder="Şifre" required>
+      <button type="submit" class="login-btn">Giriş Yap</button>
+    </form>
+    <div class="login-links">
+      <a href="#" id="forgotPassword">Şifremi Unuttum</a>
+      <span>|</span>
+      <a href="#" id="registerLink">Hesabınız yok mu? Kayıt Ol</a>
+    </div>
+    <div class="login-quote">
+      <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="Motivasyon">
+      <p>"Başarı, her gün küçük adımlar atmaktadır. Her adım, hedefinize yaklaşmanızı sağlar."</p>
+    </div>
+  </div>
+  <div id="registerModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <span class="close" id="closeRegister">&times;</span>
+      <h3>Kayıt Ol</h3>
+      <form class="register-form">
+        <input type="text" placeholder="Cep Telefonu Numarası veya E-posta" required>
+        <input type="password" placeholder="Şifre" required>
+        <input type="text" placeholder="Ad Soyad" required>
+        <input type="text" placeholder="Kullanıcı adı" required>
+        <button type="submit" class="login-btn">Kayıt Ol</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    function toggleMenu() {
+      var menu = document.getElementById('sideMenu');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+    // Kayıt ol modalı açma
+    document.getElementById('registerLink').onclick = function(e) {
+      e.preventDefault();
+      document.getElementById('registerModal').style.display = 'block';
+    };
+    document.getElementById('closeRegister').onclick = function() {
+      document.getElementById('registerModal').style.display = 'none';
+    };
+    window.onclick = function(event) {
+      var modal = document.getElementById('registerModal');
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    }
+    document.getElementById('forgotPassword').onclick = function(e) {
+      e.preventDefault();
+      alert('Şifre sıfırlama ekranı açılacak (örnek)');
+    };
+  </script>
+</body>
+</html> 

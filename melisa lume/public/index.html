@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Anasayfa</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="menu-icon" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <div id="sideMenu" class="side-menu">
+    <a href="index.html">Anasayfa</a>
+    <a href="#">Takvim</a>
+    <a href="#">İstatistikler</a>
+    <a href="#">Görevler</a>
+    <a href="profile.html">Profilim</a>
+  </div>
+  <nav class="navbar">
+    <ul>
+      <li><a class="active" href="index.html">Anasayfa</a></li>
+      <li><a href="#">Takvim</a></li>
+      <li><a href="#">İstatistikler</a></li>
+      <li><a href="#">Görevler</a></li>
+    </ul>
+  </nav>
+  <div class="header">
+    <p>Her başarı, küçük adımlarla başlar. Bugün, o adımları atmaya başlayın</p>
+  </div>
+  <div class="main-image">
+    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="Doğa">
+    <div class="main-text">
+      <h2>Her başarı, küçük adımlarla başlar. <br>Bugün, o adımları atmaya başlayın.</h2>
+    </div>
+  </div>
+  <div class="cards">
+    <div class="card">
+      <h3>Planlama</h3>
+      <p>Gününüzü organize edin, hedeflerinize ulaşın</p>
+    </div>
+    <div class="card">
+      <h3>Hobiler</h3>
+      <p>Kendinizi keşfedin, yeni yetenekler geliştirin</p>
+    </div>
+    <div class="card">
+      <h3>Rutinler</h3>
+      <p>Sağlıklı alışkanlıklar oluşturun</p>
+    </div>
+  </div>
+  <button class="start-btn" onclick="window.location.href='login.html'">Hemen Başla</button>
+  <script>
+    function toggleMenu() {
+      var menu = document.getElementById('sideMenu');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+</body>
+</html> 
