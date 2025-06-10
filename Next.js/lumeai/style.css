@@ -1,0 +1,110 @@
+-- Kullanıcı Rolleri Tablosu
+CREATE TABLE roles (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    role_name VARCHAR(50) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Kullanıcılar Tablosu
+CREATE TABLE users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    role_id INT,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    is_active BOOLEAN DEFAULT true,
+    last_login TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (role_id) REFERENCES roles(id)
+);
+
+-- İlgi Alanları Tablosu
+CREATE TABLE interests (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Kullanıcı İlgi Alanları İlişki Tablosu
+CREATE TABLE user_interests (
+    user_id INT,
+    interest_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id, interest_id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (interest_id) REFERENCES interests(id)
+);
+
+-- Planlar Tablosu
+CREATE TABLE plans (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    title VARCHAR(200) NOT NULL,
+    description TEXT,
+    start_date DATETIME NOT NULL,
+    end_date DATETIME NOT NULL,
+    status ENUM('planlandı', 'devam_ediyor', 'tamamlandı', 'iptal_edildi') DEFAULT 'planlandı',
+    plan_type ENUM('günlük', 'haftalık', 'aylık') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+-- Görevler Tablosu
+CREATE TABLE tasks (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    plan_id INT,
+    title VARCHAR(200) NOT NULL,
+    description TEXT,
+    due_date DATETIME,
+    priority ENUM('düşük', 'orta', 'yüksek') DEFAULT 'orta',
+    status ENUM('beklemede', 'devam_ediyor', 'tamamlandı') DEFAULT 'beklemede',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (plan_id) REFERENCES plans(id)
+);
+
+-- Takvim Etkinlikleri Tablosu
+CREATE TABLE calendar_events (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    title VARCHAR(200) NOT NULL,
+    description TEXT,
+    start_datetime DATETIME NOT NULL,
+    end_datetime DATETIME NOT NULL,
+    location VARCHAR(255),
+    is_recurring BOOLEAN DEFAULT false,
+    recurrence_pattern VARCHAR(50),
+    reminder_time INT, -- Dakika cinsinden hatırlatma süresi
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+-- Kullanıcı İstatistikleri Tablosu
+CREATE TABLE user_statistics (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    completed_tasks_count INT DEFAULT 0,
+    total_study_time INT DEFAULT 0, -- Dakika cinsinden
+    productivity_score DECIMAL(5,2) DEFAULT 0.00,
+    last_calculated_at TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+-- Müzik Tercihleri Tablosu
+CREATE TABLE music_preferences (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT,
+    genre VARCHAR(100),
+    preferred_duration INT, -- Dakika cinsinden
+    preferred_tempo VARCHAR(50),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
