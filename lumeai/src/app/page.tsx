@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ChatBot from "./components/ChatBot";
 import Link from "next/link";
 import Image from "next/image";
@@ -62,11 +62,6 @@ export default function Home() {
   const [newTaskText, setNewTaskText] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [dailyPlanTasksForStats, setDailyPlanTasksForStats] = useState<Task[]>([]);
-
-  useEffect(() => {
-    // Uygulama yüklendiğinde doğrudan giriş sayfasına yönlendir
-    router.push('/login');
-  }, [router]);
 
   const handleAddTask = () => {
     if (newTaskText.trim() && selectedCategory) {

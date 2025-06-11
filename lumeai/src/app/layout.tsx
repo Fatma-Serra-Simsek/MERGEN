@@ -2,8 +2,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import "./login/style.css";
+import { usePathname, useRouter } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +20,37 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const loggedIn = localStorage.getItem('isLoggedIn');
+      setIsLoggedIn(loggedIn === 'true');
+      setLoading(false);
+
+      // Eğer kullanıcı giriş yapmadıysa ve giriş sayfasında değilse, giriş sayfasına yönlendir
+      if (!loggedIn && pathname !== '/login') {
+        router.push('/login');
+      }
+      // Eğer kullanıcı giriş yaptıysa ve giriş sayfasındaysa, ana sayfaya yönlendir
+      else if (loggedIn === 'true' && pathname === '/login') {
+        router.push('/');
+      }
+    }
+  }, [pathname, router]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('isLoggedIn');
+    setIsLoggedIn(false);
+    router.push('/login');
+  };
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <html lang="tr">
@@ -39,6 +72,13 @@ export default function RootLayout({
                 <a href="#" className="text-gray-300 hover:text-white transition-colors">İstatistikler</a>
                 <Link href="/planning" className="text-gray-300 hover:text-white transition-colors">Planlama</Link>
               </div>
+              <div className="flex items-center space-x-4">
+                {isLoggedIn ? (
+                  <button onClick={handleLogout} className="text-gray-300 hover:text-white transition-colors">Çıkış Yap</button>
+                ) : (
+                  <Link href="/login" className="text-gray-300 hover:text-white transition-colors">Giriş</Link>
+                )}
+              </div>
               <div className="w-6 h-6 md:hidden"></div>
             </div>
           </div>
@@ -56,13 +96,22 @@ export default function RootLayout({
                 <Link href="/" className="text-gray-300 hover:text-white transition-colors block" onClick={() => setIsSidebarOpen(false)}>Ana Sayfa</Link>
               </li>
               <li>
-                <Link href="/calendar" className="text-gray-300 hover:text-white transition-colors block" onClick={() => setIsSidebarOpen(false)}>Takvim</Link>
+                <Link href="/calendar" className="text-gray-300 hover:text-white transition-colors block" onClick={() => setIsSidebarOpen(false)}>
+                  Takvim
+                </Link>
               </li>
               <li>
                 <a href="#" className="text-gray-300 hover:text-white transition-colors block" onClick={() => setIsSidebarOpen(false)}>İstatistikler</a>
               </li>
               <li>
                 <Link href="/planning" className="text-gray-300 hover:text-white transition-colors block" onClick={() => setIsSidebarOpen(false)}>Planlama</Link>
+              </li>
+              <li>
+                {isLoggedIn ? (
+                  <button onClick={() => { handleLogout(); setIsSidebarOpen(false); }} className="text-gray-300 hover:text-white transition-colors block">Çıkış Yap</button>
+                ) : (
+                  <Link href="/login" className="text-gray-300 hover:text-white transition-colors block" onClick={() => setIsSidebarOpen(false)}>Giriş</Link>
+                )}
               </li>
               <li>
                 <Link href="/profile" className="text-gray-300 hover:text-white transition-colors block" onClick={() => setIsSidebarOpen(false)}>Profilim</Link>
